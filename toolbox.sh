@@ -4,6 +4,9 @@
 echo "======= configuring ubuntu to not generate any popup during update ======="
 sudo sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
 
+echo "======= GIT"
+sudo apt-get update && sudo apt-get install -y git
+
 echo "======= DOCKER INSTALLATION"
 sudo apt-get remove docker docker-engine docker.io containerd runc
 
@@ -13,7 +16,8 @@ sudo apt-get update && sudo apt-get install -y \
     curl \
     gnupg \
     jq \
-    lsb-release
+    lsb-release \
+    
 
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -25,8 +29,7 @@ echo \
 sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 echo "======= DOCKER : ADD $USER to docker usergroup"
-sudo usermod -a -G docker "$USER"
-sudo usermod -a -G docker ubuntu
+sudo usermod -aG docker $USER
 
 echo "======= INSTALLATION OF microk8s channel 1.27/stable"
 sudo snap install microk8s --classic --channel=1.27/stable
