@@ -29,7 +29,7 @@ echo \
 sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 echo "======= DOCKER : ADD $USER to docker usergroup"
-sudo usermod -aG docker $USER
+sudo usermod -aG docker "$USER"
 
 echo "======= INSTALLATION OF microk8s channel 1.27/stable"
 sudo snap install microk8s --classic --channel=1.27/stable
